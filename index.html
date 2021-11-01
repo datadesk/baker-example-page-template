@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block styles -%}
+<link rel="stylesheet" href="{% static 'styles/app.scss' %}">
+{% endblock styles -%}
+
+{% block scripts -%}
+{% script 'app' %}
+{% endblock scripts -%}
+
+{% block content %}
+<article>
+  <header class="container">
+    <h1 class="headline">{{ meta.headline }}</h1>
+  </header>
+  <div class="container">
+  </div>
+</article>
+{% endblock content %}
