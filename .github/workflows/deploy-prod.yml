@@ -13,7 +13,6 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: lint
     steps:
       - id: checkout
         name: Checkout the repo
