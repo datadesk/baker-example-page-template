@@ -80,7 +80,7 @@ jobs:
         name: Build project distribution
         run: npm run build
         env:
-          BAKER_PATH_PREFIX: /projects/${{ steps.get-slug.outputs.result }}/
+          BAKER_PATH_PREFIX: /${{ steps.get-slug.outputs.result }}/
 
       - id: configure-aws
         name: Configure AWS Credentials
@@ -95,7 +95,7 @@ jobs:
         uses: datadesk/delivery-deploy-action@master
         with:
           bucket: ${{ secrets.BAKER_AWS_S3_PRODUCTION_BUCKET }}
-          base-path: projects/${{ steps.get-slug.outputs.result }}/
+          base-path: ${{ steps.get-slug.outputs.result }}/
           dir: _dist
           should-cache: true
           use-accelerate-endpoint: false
