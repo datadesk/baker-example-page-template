@@ -7,8 +7,8 @@ The Times system relies on a private version of a repository like this. With a l
 ## Links
 
 - [baker]()
-- [staging-example](http://baker-example-page-template-staging.s3-website-us-east-1.amazonaws.com/baker-example-page-template/main/)
-- [production-example]()
+- [Staging example](http://baker-example-page-template-staging.s3-website-us-east-1.amazonaws.com/baker-example-page-template/main/)
+- [Production example](http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/baker-example-page-template/)
 
 ## Getting started
 
