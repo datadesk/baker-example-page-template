@@ -74,16 +74,13 @@ JavaScript files are stored in this folder. The main file for JavaScript is call
 
 ### styles
 
-Our stylesheets are written in SASS, a powerful stylesheet language that gives developers more control over CSS. If you’re not comfortable with SASS, you can write plain CSS into the stylesheets. There are also plenty of tutorials for SASS: 
-
-* https://sass-lang.com/guide
-* https://www.w3schools.com/sass/ 
-* https://www.linkedin.com/learning/sass-essential-training/welcome?u=41722708 
+Our stylesheets are written in SASS, a powerful stylesheet language that gives developers more control over CSS. If you’re not comfortable with SASS, you can write plain CSS into the stylesheets.
 
 The styles folder consists of a stylesheet (`app.scss`) where you can add all of your styles custom to your project, though sometimes you might want to make additional stylesheets and import them into `app.scss`. This example project only include the bare minimum necessary simulate a simple site. You'd likely want to start off with a lot more in a real world implementation.
 
 ### baker.config.js
-The `baker.config.js` file is where we put options that Baker uses to serve and build the project. It has been fully documented here. Only advanced users will need to change this file
+
+The `baker.config.js` file is where we put options that Baker uses to serve and build the project. It has been fully documented elsewhere in this file. With the exception of the `domain` setting, only advanced users will need to change this file.
 
 ### index.html
 
@@ -248,3 +245,224 @@ If your build is unsuccessful, you can try creating the static site yourself loc
 ```sh
 npm run build
 ```
+
+## Global variables
+
+Baker comes with a set of global variables that are the same on every page it creates, and another set of page-specific variables that are set based on the current page being created. You can use these variables to conditionally add content to pages or filter out unrelated data based on the current page.
+
+### `NODE_ENV`
+
+The `NODE_ENV` variable will always be one of two values: `development` or `production`. It corresponds to what type of build is being run on the page.
+
+When you run `npm start`, you are in `development` mode. When you run `npm run build`, you are in `production` mode.
+
+This is most useful for adding things to pages only when you’re in `development` mode.
+
+```jinja
+{% if NODE_ENV == ‘development’ %}
+<p>You’ll never see this on the live site!</p>
+{% endif %}
+```
+
+### `DOMAIN`
+
+The `DOMAIN` variable will always be the same as the `domain` option passed in `baker.config.js`, or an empty string if one was not passed.
+
+### `PATH_PREFIX`
+
+The `PATH_PREFIX` variable will always be the same as the `pathPrefix` option passed in `baker.config.js`, or a single forward slash (`/`) if one was not passed.
+
+
+### `page.url`
+
+The project-relative URL to the current page. Will include the `pathPrefix` if one was provided in the `baker.config.js` file — in other words, it will account for any project pathing being done and point at the correct page in the project.
+
+### `page.absoluteUrl`
+
+The absolute URL to the current page. This combines the `domain`, `pathPrefix` and current path into a full URL. This is currently used to output the canonical URL and all URLs for social `<meta>` tags.
+
+```jinja
+<link rel="canonical" href="{{ page.absoluteUrl }}">
+```
+
+### `page.inputUrl`
+
+This is the path to the original template used to create this page relative to the current project’s directory. If you have an HTML file located at `page-two/index.html`, `page.inputUrl` would be `page-two/index.html`.
+
+### `page.outputUrl`
+
+This is the path to the HTML file that was output to create this page relative to the `_dist` folder. If you have an HTML file located at `page-two.html`, `page.outputUrl` would be `page-two/index.html`.
+
+## baker.config.js
+
+Every Baker project we work on includes a `baker.config.js` file in the root directory. This file is responsible for passing information to Baker so it can correctly build your project.
+
+```javascript
+export default {
+  // the directory where assets are
+  assets: ‘assets’,
+
+  // createPages
+  createPages: undefined,
+
+  // the data directory
+  data: ‘_data’,
+
+  // an optional custom domain to be used in building paths
+  domain: undefined,
+
+  // a path or glob of paths of each JavaScript entrypoint
+  entrypoints: ‘scripts/app.js’,
+
+  // the overall input directory, typically the current folder
+  input: process.cwd(),
+
+  // where the template layouts, macros and includes are located
+  layouts: ‘_layouts’,
+
+  // an object of key (name) + value (function) for adding custom
+  // filters to Nunjucks
+  nunjucksFilters: undefined,
+
+  // an object of key (name) + value (function) for adding custom
+  // tags to Nunjucks
+  nunjucksTags: undefined,
+
+  // where to output the compiled files
+  output: ‘_dist’,
+
+  // a prefix to add to the beginning of every resolved path, how
+  // slugs work
+  pathPrefix: ‘/’,
+
+  // an optional directory to put all assets within, rarely used
+  staticRoot: ‘’,
+};
+```
+
+### Options
+
+
+#### assets
+
+default: `”assets”`
+
+This tells Baker which folder to treat as the assets directory. You likely do not have to change this.
+
+#### createPages
+
+default: `undefined`
+
+`createPages` is an optional parameter that makes it possible to dynamically create pages using data and templates in the project.
+
+```javascript
+export default {
+  // …
+
+  // createPage - pass in a template, an output name, and the data context
+  // data - the prepared data in the `_data` folder
+  createPages(createPage, data) {
+    for (const title of data.titles) {
+      createPage('template.html', `${title}.html`, {
+        context: { title },
+      });
+    }
+  },
+};
+```
+
+### data
+
+default: `”_data”`
+
+The `data` option tells Baker which folder to treat as its data source. You likely will not need to change this. 
+
+#### domain
+
+default: `undefined`
+
+The `domain` option tells Baker what to use when it builds absolute URLs. The `bakery-template` presets this to `https://www.latimes.com`.
+
+#### entrypoints
+
+default: `”scripts/app.js”`
+
+The `entrypoints` option tells Baker what JavaScript files to treat as starting points for script bundles. This can be a path to a file or a file glob, making it possible to create multiple bundles at the same time.
+
+#### input
+
+default: `process.cwd()`
+
+The `input` option tells Baker what folder to treat as the main directory for the entire project. By default this is the folder the `baker.config.js` file is in. You likely will not need to set this.
+
+#### layouts
+
+default: `”_layouts”`
+
+The `layouts` option tells Baker where the templates, includes and macros are located. By default this is the `_layouts` folder. You likely will not need to set this.
+
+#### nunjucksFilters
+
+default: `undefined`
+
+You can use `nunjucksFilters` to pass in your own custom filters. In the object each key is the name of the filter, and the function value is what is called when you use the filter.
+
+```javascript
+export default {
+  // ...
+
+  // pass an object of filters to add to Nunjucks
+  nunjucksFilters: {
+    square(n) {
+      n = +n;
+
+      return n * n;
+    }
+  },
+}
+```
+
+```jinja
+{{ value|square }}
+```
+
+#### nunjucksTags
+
+default: `undefined`
+
+You can use `nunjucksTags` to pass in your own custom tags. These differ from filters in that they make it easier to output blocks of text or HTML.
+
+```javascript
+export default {
+  // ...
+
+  // pass an object of filters to add to Nunjucks
+  nunjucksTags: {
+    doubler(n) {
+      return `<p>${n} doubled is ${n * 2}</p>`;
+    }
+  },
+};
+```
+
+```jinja
+{% doubler value %}
+```
+
+#### output
+
+default: `”_dist”`
+
+The `output` option tells Baker where to put files when `npm run build` is run. By default this is the `_dist` folder. You likely will not need to set this.
+
+#### pathPrefix
+
+default: `”/”`
+
+`pathPrefix` tells Baker what path prefix to add to any URLs it builds. If `domain` is also passed, it will be combined with `pathPrefix` when building absolute URLs. You typically will not set this manually — it is used during deploys for building URLs with project slugs.
+
+#### staticRoot
+
+default: `””`
+
+The `staticRoot` option instructs Baker to put all assets in an additional directory. This is useful for projects that need to have unique slugs across every single page without nesting, allowing them to all share static assets. However — this is a special case and requires a custom setup for deployments. Do not attempt to use this without a good reason.
