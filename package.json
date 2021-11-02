@@ -3,7 +3,6 @@
   "private": true,
   "scripts": {
     "build": "NODE_ENV=production bake build --config",
-    "deploy": "NODE_ENV=production node _config/deploy.js",
     "git-pre-commit": "lint-staged",
     "start": "NODE_ENV=development bake serve --config"
   },
