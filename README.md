@@ -6,9 +6,13 @@ The Times system relies on a private version of a repository like this. With a l
 
 ## Links
 
-- [baker]()
+- [baker](https://github.com/datadesk/baker)
 - [Staging example](http://baker-example-page-template-staging.s3-website-us-east-1.amazonaws.com/baker-example-page-template/main/)
 - [Production example](http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/baker-example-page-template/)
+
+## Configuring your account
+
+
 
 ## Creating a new page
 
@@ -68,7 +72,7 @@ This folder that stores our site’s base template and reusable code snippets. W
 
 #### `base.html`
 
-The base.html file contains all the fundamental HTML found on every page we create. The example here is rudimentary by design.
+The base.html file contains all the fundamental HTML found on every page we create. The example here is rudimentary by design. You'd likely want include a lot more in a real-world implementation.
 
 ### _workspace
 
@@ -76,11 +80,11 @@ The workspace is a place for you to put anything relevant to the project that do
 
 ### assets
 
-This is used to store media and other assets such as images, videos, audio, fonts, etc. 
+This is used to store media and other assets such as images, videos, audio, fonts, etc. They can be pulled into the page via the `static` template tags.
 
 ### scripts
 
-JavaScript files are stored in this folder. The main file for JavaScript is called `app.js`, which you can write your code directly to. You can also create other files to write your JavaScript code in this folder, but you must make sure that the file is booted from `app.js`, otherwise it won’t run.
+JavaScript files are stored in this folder. The main file for JavaScript is called `app.js`, which you can write your code directly. Packages installed via `npm` can be imported and run like any other Node.js script. You can create other files to write your JavaScript code in this folder, but you must make sure that the file is booted from `app.js`.
 
 ### styles
 
@@ -90,7 +94,7 @@ Our stylesheets are written in SASS, a powerful stylesheet language that gives d
 * https://www.w3schools.com/sass/ 
 * https://www.linkedin.com/learning/sass-essential-training/welcome?u=41722708 
 
-The styles folder consists of a stylesheet (`app.scss`) that imports everything necessary for a standard page. You can add all of your styles custom to your project to the main stylesheet, though sometimes you might want to make additional stylesheets and import them into `app.scss`.
+The styles folder consists of a stylesheet (`app.scss`) where you can add all of your styles custom to your project, though sometimes you might want to make additional stylesheets and import them into `app.scss`. This example project only include the bare minimum necessary simulate a simple site. You'd likely want to start off with a lot more in a real world implementation.
 
 ### baker.config.js
 The `baker.config.js` file is where we put options that Baker uses to serve and build the project. It has been fully documented here. Only advanced users will need to change this file
@@ -107,3 +111,10 @@ These files track the Node dependencies used in our projects. When you run `npm 
 
 This is a special directory for storing files that GitHub uses to interact with our projects and code. The `.github/workflows` directory contains the GitHub Action that handles our development deployments. You do not need to edit anything in here.
 
+## Staging your work
+
+TK
+
+## Publishing your work
+
+TK
