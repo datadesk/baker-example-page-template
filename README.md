@@ -54,10 +54,6 @@ Now go to `localhost:3000` in your browser. You should see a boilerplate page re
 
 Here are the standard files and folders that you’ll find when you clone a new project from our page template. You’ll spend more time working with some files than others, but it’s good to have a general sense of what they all do.
 
-### _config
-
-This directory contains the master script for deploying our projects to latimes.com. Only advanced users will ever need to edit it. If you’re a beginner, you can simply leave it alone.
-
 ### _data
 
 The data folder contains relevant data for the project. We use this folder to store required information about every project — like what URL it should live at. You can also store a variety of other data types here, including `.aml`, `.csv`, and `.json`.
