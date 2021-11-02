@@ -12,7 +12,25 @@ The Times system relies on a private version of a repository like this. With a l
 
 ## Configuring your account
 
+Before you can deploy a page created by this repository, you will need to configure your Amazon AWS account and add a set of credentials to your GitHub account.
 
+First, you'll need to create two buckets in Amazon's S3 storage service. One is for your staging site. The other is for your production site. For this simple example, each should allow public access and be [configured to serve a static website](https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html). In a more sophisticated arragenment, like the one we run at the Los Angeles Times, the buckets could be linked with registered domain names and the staging site shielded from public view via an authentication scheme.
+
+The names of those buckets should then be stored as GitHub "secrets" accessible to the Actions that deploy the site. You should visit [your settings panel for your account or organization](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-organization). Start by adding these two secrets.
+
+|Name|Value|
+|:---|:----|
+|`BAKER_AWS_S3_STAGING_BUCKET`|The name of your staging bucket|
+|`BAKER_AWS_S3_STAGING_REGION`|The S3 region where your staging bucket was created|
+|`BAKER_AWS_S3_PRODUCTION_BUCKET`|The name of your production bucket|
+|`BAKER_AWS_S3_PRODUCTION_REGION`|The S3 region where your production bucket was created|
+
+Next you should ensure that you have an key pair from AWS that has the ability to upload public files to your two buckets. The values should also be added to your secrets.
+
+|Name|Value|
+|:---|:----|
+|`BAKER_AWS_ACCESS_KEY_ID`|The AWS access key|
+|`BAKER_AWS_SECRET_ACCESS_KEY`|The AWS secret key|
 
 ## Creating a new page
 
@@ -107,6 +125,71 @@ These files track the Node dependencies used in our projects. When you run `npm 
 
 This is a special directory for storing files that GitHub uses to interact with our projects and code. The `.github/workflows` directory contains the GitHub Action that handles our development deployments. You do not need to edit anything in here.
 
+## Accessing assets
+
+Files stores in the assets directory are optimized and hashed as part of the deployment process. To ensure that your references to images and other static files, you should use the `{% static %}` tag. That ensures the file is heavily cached when it’s published and that the link to the image works across all environments. You’ll want to use it for all photos and videos.
+
+```jinja
+<figure>
+  <img src="{% static 'assets/images/baker.jpg' %}" alt="Baker logo" width=200>
+</figure>
+```
+
+## Accessing data
+
+Structrued data files stored in your `_data` folder are accessible via templatetags or JavaScript. In this demonstration, a file called `example.json` has been included to illustrate what's possible. Other file formats like CSV, YAML and AML are supported.
+
+### Via Nunjucks templatetags
+
+Files in the `_data` folder are available by their name within your templates. So, with `_data/example.json`, you can write something like:
+
+```jinja
+{% for obj in example %}
+  {{ obj.year }}: {{ obj.wheat }}
+{% endfor %}
+```
+
+### Via JavaScript
+
+A common need for anyone building a project in Baker is access to raw data within a JavaScript file. Often this data is then passed along to code written using d3 or Svelte to draw graphics or create HTML tables on the page.
+
+If the data you’re accessing is already available at a URL you trust will stay live, this is easy. But what if it isn’t, and it is data you’ve prepared yourself?
+
+It’s possible to access records in your _data folder. The only caveat is the job of converting this file into a usable state is your responsibility. A good library for this is `d3-fetch`.
+
+To build the URL to this file in a way Baker understands, use this format:
+
+```javascript
+import { json } from 'd3-fetch';
+
+// the first parameter should be the path to the file
+// the second parameter *must* be “import.meta.url”
+const url = new URL(‘../_data/example.json’, import.meta.url);
+
+// Call it in
+const data = await json(url);
+```
+
+Another approach is to print the data into your template as a `script` tag. The `jsonScript` filter takes the variable passed to it, runs `JSON.stringify` on it, and outputs the JSON into the HTML within a `<script>` tag with the ID set on it you pass as the parameter.
+
+```jinja
+{{ example|jsonScript(‘example-data’) }}
+```
+
+Once that is in place, you can now retrieve the JSON stored in the page by ID in your JavaScript.
+
+```javascript
+// grab the element jsonScript created by using the same ID you passed in
+const dataElement = document.getElementById(‘example-data’);
+
+// convert the contents of that element into JSON
+// do what you need to do with “data”!
+const data = JSON.parse(dataElement.textContent);
+```
+
+While the URL method is recommended, this method may still be preferred when you are trying to avoid extra network requests. It also has the added benefit of not requiring a special library to convert `.csv` data into JSON.
+
+
 ## Staging your work
 
 [A GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml) included with this repository will automatically publish a staging version for every branch. For instance, code pushed to the default `main` branch will appear at `https://your-staging-bucket-url/your-repo/main/`.
@@ -154,3 +237,23 @@ Wait a few minutes and your page should show up at `https://your-production-buck
 ## Editing pages after they’re live
 
 To re-publish your story after making edits, make another release after pushing up your changes to main branch.
+
+## Debugging
+
+The baker test server can log with greater detail by starting with the following option.
+
+```sh
+DEBUG=1 npm start
+```
+
+To limit the logs to baker run:
+
+```sh
+DEBUG=baker:* npm start
+```
+
+If your build is unsuccessful, you can try creating the static site yourself locally via your terminal. If there are errors with the page building, they will be printed out to your terminal.
+
+```sh
+npm run build
+```
