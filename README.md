@@ -113,7 +113,9 @@ This is a special directory for storing files that GitHub uses to interact with 
 
 ## Staging your work
 
-TK
+[A GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml) included with this repository will automatically publish a staging version for every branch. For instance, code pushed to the default `main` branch will appear at `https://your-bucket-url/your-repo/main/`.
+
+If you were to create a new git branch called `bugfix` and push your code, you would soon see a new staging version at `https://your-bucket-url/your-repo/bugfix/`.
 
 ## Publishing your work
 
