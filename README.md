@@ -4,6 +4,17 @@ A demonstration of how to build and publish pages with the [baker](https://githu
 
 The Los Angeles Times uses baker to build the static pages published at latimes.com/projects. The Times system relies on a private version of a repository much like this one. This simplified example publishes [staging](http://baker-example-page-template-staging.s3-website-us-east-1.amazonaws.com/baker-example-page-template/main/) and [production](http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/baker-example-page-template/) versions to public buckets on Amazon S3. 
 
+## Features
+
+- 🔃 Live-upadting local test server
+- 🖨️ HTML templating with [Nunjucks](https://mozilla.github.io/nunjucks/)
+- 🖌️ Extended CSS with [Sass](https://sass-lang.com/)
+- 🗞️ JavaScript bundling with [Rollup](https://www.rollupjs.org/guide/en/) and [Babel](https://babeljs.io/) 
+- 🔢 Data imports with [quaff](https://github.com/rdmurphy/quaff)
+- 🥞 Dynamic page generation based on structured inputs
+- 🏭 Automatic deployment of each branch to a staging environment on each push event via GitHub Actions
+- 🌎 Push button deployment to the production environment on each release event via GitHub Actions
+
 # Documentation
 
 With a little configuration, you can use this template to easily publish a page. With a little customization, you can make it look anyway you'd like. This guide will introduce you to the basics.
