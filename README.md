@@ -10,28 +10,6 @@ The Times system relies on a private version of a repository like this. With a l
 - [Staging example](http://baker-example-page-template-staging.s3-website-us-east-1.amazonaws.com/baker-example-page-template/main/)
 - [Production example](http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/baker-example-page-template/)
 
-## Configuring your account
-
-Before you can deploy a page created by this repository, you will need to configure your Amazon AWS account and add a set of credentials to your GitHub account.
-
-First, you'll need to create two buckets in Amazon's S3 storage service. One is for your staging site. The other is for your production site. For this simple example, each should allow public access and be [configured to serve a static website](https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html). In a more sophisticated arragenment, like the one we run at the Los Angeles Times, the buckets could be linked with registered domain names and the staging site shielded from public view via an authentication scheme.
-
-The names of those buckets should then be stored as GitHub "secrets" accessible to the Actions that deploy the site. You should visit [your settings panel for your account or organization](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-organization). Start by adding these two secrets.
-
-|Name|Value|
-|:---|:----|
-|`BAKER_AWS_S3_STAGING_BUCKET`|The name of your staging bucket|
-|`BAKER_AWS_S3_STAGING_REGION`|The S3 region where your staging bucket was created|
-|`BAKER_AWS_S3_PRODUCTION_BUCKET`|The name of your production bucket|
-|`BAKER_AWS_S3_PRODUCTION_REGION`|The S3 region where your production bucket was created|
-
-Next you should ensure that you have an key pair from AWS that has the ability to upload public files to your two buckets. The values should also be added to your secrets.
-
-|Name|Value|
-|:---|:----|
-|`BAKER_AWS_ACCESS_KEY_ID`|The AWS access key|
-|`BAKER_AWS_SECRET_ACCESS_KEY`|The AWS secret key|
-
 ## Creating a new page
 
 The first step is to click GitHub’s “use this template” button to a make a copy of the repository for yourself.
@@ -189,14 +167,37 @@ const data = JSON.parse(dataElement.textContent);
 
 While the URL method is recommended, this method may still be preferred when you are trying to avoid extra network requests. It also has the added benefit of not requiring a special library to convert `.csv` data into JSON.
 
+## Deployment
 
-## Staging your work
+### Configuring your account
+
+Before you can deploy a page created by this repository, you will need to configure your Amazon AWS account and add a set of credentials to your GitHub account.
+
+First, you'll need to create two buckets in Amazon's S3 storage service. One is for your staging site. The other is for your production site. For this simple example, each should allow public access and be [configured to serve a static website](https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html). In a more sophisticated arragenment, like the one we run at the Los Angeles Times, the buckets could be linked with registered domain names and the staging site shielded from public view via an authentication scheme.
+
+The names of those buckets should then be stored as GitHub "secrets" accessible to the Actions that deploy the site. You should visit [your settings panel for your account or organization](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-organization). Start by adding these two secrets.
+
+|Name|Value|
+|:---|:----|
+|`BAKER_AWS_S3_STAGING_BUCKET`|The name of your staging bucket|
+|`BAKER_AWS_S3_STAGING_REGION`|The S3 region where your staging bucket was created|
+|`BAKER_AWS_S3_PRODUCTION_BUCKET`|The name of your production bucket|
+|`BAKER_AWS_S3_PRODUCTION_REGION`|The S3 region where your production bucket was created|
+
+Next you should ensure that you have an key pair from AWS that has the ability to upload public files to your two buckets. The values should also be added to your secrets.
+
+|Name|Value|
+|:---|:----|
+|`BAKER_AWS_ACCESS_KEY_ID`|The AWS access key|
+|`BAKER_AWS_SECRET_ACCESS_KEY`|The AWS secret key|
+
+### Staging your work
 
 [A GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml) included with this repository will automatically publish a staging version for every branch. For instance, code pushed to the default `main` branch will appear at `https://your-staging-bucket-url/your-repo/main/`.
 
 If you were to create a new git branch called `bugfix` and push your code, you would soon see a new staging version at `https://your-staging-bucket-url/your-repo/bugfix/`.
 
-## Publishing your work
+### Publishing your work
 
 Before you send your page live, you should settle on a final slug for the URL.
 
@@ -233,10 +234,6 @@ Finally, hit the big green button at the bottom and send out the release.
 ![](./.github/images/publish-release.png)
 
 Wait a few minutes and your page should show up at `https://your-production-bucket-url/your-slug/`.
-
-## Editing pages after they’re live
-
-To re-publish your story after making edits, make another release after pushing up your changes to main branch.
 
 ## Debugging
 
