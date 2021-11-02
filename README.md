@@ -4,6 +4,18 @@ The Los Angeles Times uses baker to build the static pages published at latimes.
 
 With a little configuration, you can use this template to easily publish a page. With a little customization, you can make it look anyway you'd like. This guide will introduce you to the basics.
 
+# Documentation
+
+## Table of Contents
+
+- [Creating a new page](#creating-a-new-page)
+- [Exploring the repository](#exploring-the-repository)
+- [Accessing assets](#accessing-assets)
+- [Accessing data](#accessing-data)
+- [Deployment](#deployment)
+- [Global variables](#global-variables)
+- [baker.config.js](#bakerconfigjs-1)
+
 ## Creating a new page
 
 The first step is to click GitHub’s “use this template” button to a make a copy of the repository for yourself.
