@@ -6,14 +6,14 @@ The Los Angeles Times uses baker to build the static pages published at latimes.
 
 ## Features
 
-🔃 Live-updating local test server
-🖨️ HTML templating with [Nunjucks](https://mozilla.github.io/nunjucks/)
-🖌️ Extended CSS with [Sass](https://sass-lang.com/)
-🗞️ JavaScript bundling with [Rollup](https://www.rollupjs.org/guide/en/) and [Babel](https://babeljs.io/) 
-🔢 Data imports with [quaff](https://github.com/rdmurphy/quaff)
-🥞 Dynamic page generation based on structured inputs
-🏭 Automatic deployment of each branch to a staging environment on each `push` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml)
-🌎 Push button deployment to the production environment on each release event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-prod.yml)
+- 🔃 Live-updating local test server
+- 🖨️ HTML templating with [Nunjucks](https://mozilla.github.io/nunjucks/)
+- 🖌️ Extended CSS with [Sass](https://sass-lang.com/)
+- 🗞️ JavaScript bundling with [Rollup](https://www.rollupjs.org/guide/en/) and [Babel](https://babeljs.io/) 
+- 🔢 Data imports with [quaff](https://github.com/rdmurphy/quaff)
+- 🥞 Dynamic page generation based on structured inputs
+- 🏭 Automatic deployment of each branch to a staging environment on each `push` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml)
+- 🌎 Push button deployment to the production environment on each release event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-prod.yml)
 
 # Documentation
 
