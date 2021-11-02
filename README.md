@@ -142,14 +142,14 @@ const data = await json(url);
 Another approach is to print the data into your template as a `script` tag. The `jsonScript` filter takes the variable passed to it, runs `JSON.stringify` on it, and outputs the JSON into the HTML within a `<script>` tag with the ID set on it you pass as the parameter.
 
 ```jinja
-{{ example|jsonScript(‘example-data’) }}
+{{ example|jsonScript('example-data') }}
 ```
 
 Once that is in place, you can now retrieve the JSON stored in the page by ID in your JavaScript.
 
 ```javascript
 // grab the element jsonScript created by using the same ID you passed in
-const dataElement = document.getElementById(‘example-data’);
+const dataElement = document.getElementById('example-data');
 
 // convert the contents of that element into JSON
 // do what you need to do with “data”!
