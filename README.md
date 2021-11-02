@@ -13,7 +13,7 @@ The Los Angeles Times uses baker to build the static pages published at latimes.
 - 🔢 Data imports with [quaff](https://github.com/rdmurphy/quaff)
 - 🥞 Dynamic page generation based on structured inputs
 - 🏭 Automatic deployment of each branch to a staging environment on each `push` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml)
-- 🌎 Push button deployment to the production environment on each release event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-prod.yml)
+- 🌎 Push button deployment to the production environment on each `release` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-prod.yml)
 
 # Documentation
 
