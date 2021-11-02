@@ -113,10 +113,48 @@ This is a special directory for storing files that GitHub uses to interact with 
 
 ## Staging your work
 
-[A GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml) included with this repository will automatically publish a staging version for every branch. For instance, code pushed to the default `main` branch will appear at `https://your-bucket-url/your-repo/main/`.
+[A GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml) included with this repository will automatically publish a staging version for every branch. For instance, code pushed to the default `main` branch will appear at `https://your-staging-bucket-url/your-repo/main/`.
 
-If you were to create a new git branch called `bugfix` and push your code, you would soon see a new staging version at `https://your-bucket-url/your-repo/bugfix/`.
+If you were to create a new git branch called `bugfix` and push your code, you would soon see a new staging version at `https://your-staging-bucket-url/your-repo/bugfix/`.
 
 ## Publishing your work
 
-TK
+Before you send your page live, you should settle on a final slug for the URL.
+
+Step one is to enter your slug into the `_data/meta.aml` configuration file.
+
+```yaml
+slug: your-page-slug
+```
+
+It’s never a bad idea to make sure your slug hasn’t already been taken. You can do that by visiting `https://your-production-bucket-url/your-slug/` and ensuring it returns a page not found error.
+
+Next you commit your change to the configuration file and make sure it’s pushed to the main branch on GitHub.
+
+```bash
+git add _data/meta.aml
+git commit -m “Set page slug”
+git push origin main
+```
+
+Visit the releases section of your repository’s page on GitHub. You can find it on the repo’s homepage.
+
+![](./.github/images/releases.png)
+
+Draft a new release.
+
+![](./.github/images/draft-release.png)
+
+There you’ll create a new tag number. A good approach is to start with an x.x.x format number that follows [semantic versioning](https://semver.org/) standards. 1.0.0 is a fine start.
+
+![](./.github/images/version-release.png)
+
+Finally, hit the big green button at the bottom and send out the release.
+
+![](./.github/images/publish-release.png)
+
+Wait a few minutes and your page should show up at `https://your-production-bucket-url/your-slug/`.
+
+## Editing pages after they’re live
+
+To re-publish your story after making edits, make another release after pushing up your changes to main branch.
