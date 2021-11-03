@@ -5,6 +5,7 @@ concurrency:
   cancel-in-progress: true
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - "**" # always deploy for branches
@@ -84,3 +85,4 @@ jobs:
           dir: _dist
           should-cache: true
           use-accelerate-endpoint: false
+          public: true
