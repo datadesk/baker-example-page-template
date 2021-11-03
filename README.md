@@ -25,6 +25,7 @@ With a little configuration, you can use this template to easily publish a page.
 - [Exploring the repository](#exploring-the-repository)
 - [Accessing assets](#accessing-assets)
 - [Accessing data](#accessing-data)
+- [Dynamic pages](#dynamic-pages)
 - [Deployment](#deployment)
 - [Global variables](#global-variables)
 - [baker.config.js](#bakerconfigjs-1)
