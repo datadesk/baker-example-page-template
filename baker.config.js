@@ -13,9 +13,10 @@ export default {
   createPages(createPage, data) {
     const pageList = data.example;
     for (const d of pageList) {
-      d['slug'] = `${data.meta.slug}/${d.year}/`;
       const template = 'year-detail.html';
-      createPage(template, `${d.year}`, { obj: d });
+      const url = `${d.year}`;
+      const context = { obj: d };
+      createPage(template, url, context);
     }
   },
 };
