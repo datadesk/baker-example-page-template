@@ -190,7 +190,7 @@ You can generate an unlimited number of static pages by feeding a structured dat
 
 ```javascript
 export default {
- # ... all the other optionshave been excluded to make the point
+ // ... all the other options above this one have been excluded to make the point
  createPages: createPages(createPage, data) {
     // Grab the data from the _data folder
     const pageList = data.example;
