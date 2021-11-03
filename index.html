@@ -37,7 +37,7 @@
         <tbody>
         {% for obj in example %}
             <tr>
-                <td>{{ obj.year }}</td>
+                <td><a href="./{{ obj.year }}/">{{ obj.year }}</a></td>
                 <td>{{ obj.wheat }}</td>
             </tr>
         {% endfor %}

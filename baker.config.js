@@ -10,4 +10,12 @@ export default {
   }.js`,
   pathPrefix:
     process.env.BAKER_PATH_PREFIX || process.env.DELIVERY_BASE_PATH || '/',
+  createPages(createPage, data) {
+    const pageList = data.example;
+    for (const d of pageList) {
+      d['slug'] = `${data.meta.slug}/${d.year}/`;
+      const template = 'year-detail.html';
+      createPage(template, `${d.year}`, { obj: d });
+    }
+  },
 };
