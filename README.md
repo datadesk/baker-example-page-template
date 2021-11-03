@@ -183,6 +183,33 @@ const data = JSON.parse(dataElement.textContent);
 
 While the URL method is recommended, this method may still be preferred when you are trying to avoid extra network requests. It also has the added benefit of not requiring a special library to convert `.csv` data into JSON.
 
+## Dynamic pages
+
+You can generate an unlimited number of static pages by feeding a structured data source to the `createPages` option in the `baker.config.js` file. For instance, this snippet will generate a page for every record in the `example.json` file.
+
+```javascript
+export default {
+ # ... all the other optionshave been excluded to make the point
+ createPages: createPages(createPage, data) {
+    // Grab the data from the _data folder
+    const pageList = data.example;
+    // Loop through the records
+    for (const d of pageList) {
+      // Set the base template that will be used for each object. It's in the _layouts folder
+      const template = 'year-detail.html';
+      // Set the URL for the page
+      const url = `${d.year}`;
+      // Set the variables that will be passed into the template's context
+      const context = { obj: d };
+      // Use the provided function to render the page
+      createPage(template, url, context);
+    }
+  },
+};
+```
+
+That is responsible for creating URLs like [/baker-example-page-template/1775/](http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/baker-example-page-template/1775/) and [/baker-example-page-template/main/](http://baker-example-page-template-staging.s3-website-us-east-1.amazonaws.com/baker-example-page-template/main/) with a single template. 
+
 ## Deployment
 
 ### Configuring your account
