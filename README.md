@@ -17,7 +17,7 @@ The Los Angeles Times uses baker to build the static pages published at latimes.
 
 # Documentation
 
-With a little configuration, you can use this template to easily publish a page. With a little customization, you can make it look anyway you'd like. This guide will introduce you to the basics.
+With a little configuration, you can use this template to easily publish a page. With a little customization, you can make it look any way you'd like. This guide will introduce you to the basics.
 
 ## Table of Contents
 
