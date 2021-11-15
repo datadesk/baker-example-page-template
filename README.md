@@ -2,7 +2,7 @@
 
 A demonstration of how to build and publish pages with the [baker](https://github.com/datadesk/baker) build tool.
 
-The Los Angeles Times uses baker to build the static pages published at latimes.com/projects. The Times system relies on a private version of a repository much like this one. This simplified example publishes [staging](http://baker-example-page-template-staging.s3-website-us-east-1.amazonaws.com/baker-example-page-template/main/) and [production](http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/baker-example-page-template/) versions to public buckets on Amazon S3. 
+The Los Angeles Times uses baker to create the static pages published at latimes.com/projects. The Times system relies on a private version of a repository much like this one. This simplified example publishes [staging](http://baker-example-page-template-staging.s3-website-us-east-1.amazonaws.com/baker-example-page-template/main/) and [production](http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/baker-example-page-template/) versions to public buckets on Amazon S3. 
 
 ## Features
 
