@@ -17,7 +17,7 @@ The Los Angeles Times uses baker to build the static pages published at latimes.
 
 ## Requirements
 
-* [Node.js](https://nodejs.org/en/) versions 12, 14 and 16, though at minimum 12.20, 14.14, or 16.0.
+* [Node.js](https://nodejs.org/en/) version 12, 14 or 16, though at minimum 12.20, 14.14, or 16.0.
 * [Node Package Manager](https://www.w3schools.com/whatis/whatis_npm.asp)
 * [git](https://git-scm.com/)
 
