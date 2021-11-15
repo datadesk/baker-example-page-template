@@ -15,6 +15,12 @@ The Los Angeles Times uses baker to build the static pages published at latimes.
 - 🏭 Automatic deployment of each branch to a staging environment on each `push` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml)
 - 🌎 Push button deployment to the production environment on each `release` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-prod.yml)
 
+## Requirements
+
+* [Node.js](https://nodejs.org/en/) versions 12, 14 and 16, though at minimum 12.20, 14.14, or 16.0.
+* [Node Package Manager](https://www.w3schools.com/whatis/whatis_npm.asp)
+* [git](https://git-scm.com/)
+
 # Documentation
 
 With a little configuration, you can use this template to easily publish a page. With a little customization, you can make it look any way you'd like. This guide will introduce you to the basics.
