@@ -379,6 +379,10 @@ export default {
   // where the template layouts, macros and includes are located
   layouts: ‘_layouts’,
 
+  // an object with the keys and values of global variables to be
+  // passed to all Nunjucks templates
+  nunjucksVariables: undefined,
+
   // an object of key (name) + value (function) for adding custom
   // filters to Nunjucks
   nunjucksFilters: undefined,
