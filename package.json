@@ -7,7 +7,7 @@
     "start": "NODE_ENV=development bake serve --config"
   },
   "dependencies": {
-    "@datagraphics/baker": "^0.38.0",
+    "@datagraphics/baker": "^0.39.0",
     "@datagraphics/delivery": "^0.6.0",
     "intersection-observer": "^0.12.0"
   },
