@@ -63,11 +63,6 @@ jobs:
             const slug = meta.slug.trim();
             console.log(`slug -> ${slug}`);
 
-            // Verify that the slug has been configured
-            if (slug === 'page-template') {
-                core.setFailed('No slug configured in the meta.aml file');
-            }
-
             // If we get this far, we're good to go.
             return meta.slug;
 
