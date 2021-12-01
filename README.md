@@ -249,15 +249,21 @@ If you were to create a new git branch called `bugfix` and push your code, you w
 
 ### Publishing your work
 
-Before you send your page live, you should settle on a final slug for the URL.
+Before you send your page live, you should settle on a final slug for the URL. This will set the subdirectory in your bucket where the page will be published. This feature allows The Times to publish numerous pages inside the same bucket with each page managed by a different repository.
 
-Step one is to enter your slug into the `_data/meta.aml` configuration file.
+Step one is to enter the slug for your URL into the `_data/meta.aml` configuration file.
 
 ```yaml
 slug: your-page-slug
 ```
 
 It’s never a bad idea to make sure your slug hasn’t already been taken. You can do that by visiting `https://your-production-bucket-url/your-slug/` and ensuring it returns a page not found error.
+
+If you want to publish your page at the root of your bucket, you can leave the slug null.
+
+```yaml
+slug:
+```
 
 Next you commit your change to the configuration file and make sure it’s pushed to the main branch on GitHub.
 
