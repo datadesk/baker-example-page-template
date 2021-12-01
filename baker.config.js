@@ -18,5 +18,5 @@ export default {
 //     const context = { obj: d };
 //     createPage(template, url, context);
 //   }
-  },
+// },
 };
