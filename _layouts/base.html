@@ -2,7 +2,7 @@
 <html lang="{% block lang %}en{% endblock lang %}">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}{% endblock title %}</title>
+  <title>{% block title %}{{ meta.seo_headline }}{% endblock title %}</title>
   <meta name="description" content="{% block description %}{{ meta.seo_description }}{% endblock description %}">
 
   {% block viewport %}
