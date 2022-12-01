@@ -66,6 +66,15 @@ jobs:
             // If we get this far, we're good to go.
             return meta.slug;
 
+      - id: slack
+        name: Create Slack notification
+        uses: datadesk/notify-slack-on-build@v2
+        with:
+          slack-token: ${{ secrets.BAKER_BOT_SLACK_TOKEN }}
+          channel-id: ${{ secrets.BAKER_BOT_SLACK_CHANNEL_ID }}
+          status: in_progress
+          url: http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/${{ steps.get-slug.outputs.result }}/
+
       - id: npm-build
         name: Build project distribution
         run: npm run build
@@ -90,3 +99,23 @@ jobs:
           should-cache: true
           use-accelerate-endpoint: false
           public: true
+
+      - name: Update Slack notification (success)
+        if: success()
+        uses: datadesk/notify-slack-on-build@v2
+        with:
+          slack-token: ${{ secrets.BAKER_BOT_SLACK_TOKEN }}
+          channel-id: ${{ steps.slack.outputs.channel-id }}
+          status: success
+          url: http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/${{ steps.get-slug.outputs.result }}/
+          message-id: ${{ steps.slack.outputs.message-id }}
+
+      - name: Update Slack notification (failure)
+        if: failure()
+        uses: datadesk/notify-slack-on-build@v2
+        with:
+          slack-token: ${{ secrets.BAKER_BOT_SLACK_TOKEN }}
+          channel-id: ${{ steps.slack.outputs.channel-id }}
+          status: failure
+          url: http://baker-example-page-template-production.s3-website-us-east-1.amazonaws.com/${{ steps.get-slug.outputs.result }}/
+          message-id: ${{ steps.slack.outputs.message-id }}
