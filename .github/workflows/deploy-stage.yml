@@ -6,11 +6,11 @@ concurrency:
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - "**" # always deploy for branches
-  #   tags-ignore:
-  #     - "**" # never deploy for tags
+  push:
+    branches:
+      - "**" # always deploy for branches
+    tags-ignore:
+      - "**" # never deploy for tags
 
 jobs:
   deploy:
@@ -18,31 +18,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
-
-      - name: Use npm v7
-        run: npm install --global npm@7
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          node-version: 16
+          cache: 'npm'
 
       - name: npm install
         run: npm ci --production
 
-      - name: Prepare the Delivery path prefix
-        uses: actions/github-script@v3
-        id: delivery-path-prefix
+      - id: delivery-path-prefix
+        name: Prepare the Delivery path prefix
+        uses: actions/github-script@v6
         with:
           result-encoding: string
           script: |
@@ -78,7 +67,7 @@ jobs:
           aws-region: ${{ secrets.BAKER_AWS_S3_STAGING_REGION }}
 
       - name: Upload the prepared files
-        uses: datadesk/delivery-deploy-action@main
+        uses: datadesk/delivery-deploy-action@v1
         with:
           bucket: ${{ secrets.BAKER_AWS_S3_STAGING_BUCKET }}
           base-path: ${{ steps.delivery-path-prefix.outputs.result }}
