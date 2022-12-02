@@ -78,7 +78,7 @@ jobs:
           aws-region: ${{ secrets.BAKER_AWS_S3_STAGING_REGION }}
 
       - name: Upload the prepared files
-        uses: datadesk/delivery-deploy-action@master
+        uses: datadesk/delivery-deploy-action@main
         with:
           bucket: ${{ secrets.BAKER_AWS_S3_STAGING_BUCKET }}
           base-path: ${{ steps.delivery-path-prefix.outputs.result }}
