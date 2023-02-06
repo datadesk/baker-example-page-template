@@ -9,12 +9,5 @@
       "name": "projectName",
       "message": "What should we call this project?"
     }]
-  },
-  {
-    "action": "remove",
-    "paths": [
-      ".github/images/*",
-      "README.md"
-    ]
   }]
 }
