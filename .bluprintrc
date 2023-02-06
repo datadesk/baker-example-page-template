@@ -1,0 +1,31 @@
+{
+  "bluprint": "^0.6.6",
+  "name": "baker-example-page",
+  "category": "baker",
+  "actions":  [{
+    "action": "prompt",
+    "questions": [{
+      "type": "text",
+      "name": "projectName",
+      "message": "What should we call this project?"
+    }]
+  }, {
+    "action": "remove",
+    "paths": [
+      ".github/images/*",
+      "README.md"
+    ]
+  }, {
+    "action": "execute",
+    "cmds": [
+      ["echo", "{{ projectName }}", ">", "README.md"]
+      ["git", ["init"]],
+      ["git", ["add", "."]],
+      ["git", ["commit", "-m", "initial"]],
+      ["npm", "install"]
+    ]
+  }, {
+    "action": "log",
+    "msg": "\n\n🏁 Finished creating your project, {cyan {{ projectName }}}!\n\nRun {green npm start} to begin developing.\n"
+  }
+}
