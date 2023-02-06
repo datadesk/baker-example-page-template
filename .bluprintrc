@@ -28,4 +28,5 @@
     "action": "log",
     "msg": "\n\n🏁 Finished creating your project, {cyan {{ projectName }}}!\n\nRun {green npm start} to begin developing.\n"
   }
+  ]
 }
