@@ -2,12 +2,5 @@
   "bluprint": "^0.6.6",
   "name": "baker-example-page",
   "category": "baker",
-  "actions":  [{
-    "action": "prompt",
-    "questions": [{
-      "type": "text",
-      "name": "projectName",
-      "message": "What should we call this project?"
-    }]
-  }]
+  "actions":  []
 }
