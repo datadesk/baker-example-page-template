@@ -21,10 +21,6 @@
 ,   {
       "action": "execute",
       "cmds": [
-        ["echo", ["{{ projectName }}", ">", "README.md"]],
-        ["git", ["init"]],
-        ["git", ["add", "."]],
-        ["git", ["commit", "-m", "initial"]],
         ["npm", ["install"]]
       ]
     },
