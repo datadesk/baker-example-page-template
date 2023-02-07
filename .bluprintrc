@@ -2,15 +2,25 @@
   "bluprint": "^0.6.6",
   "name": "baker-example-page",
   "category": "baker",
-  "actions":  [{
-    "action": "prompt",
-    "questions": [{
-      "type": "text",
-      "name": "projectName",
-      "message": "What should we call this project?"
-    }]
-  }, {
-    "action": "log",
-    "msg": "\n\n🏁 Finished creating your project, {cyan {{ projectName }}}!\n\nRun {green npm start} to begin developing.\n"
-  }]
+  "actions":  [
+    {
+      "action": "prompt",
+      "questions": [{
+        "type": "text",
+        "name": "projectName",
+        "message": "What should we call this project?"
+      }]
+    },
+    {
+      "action": "remove",
+      "paths": [
+        ".github/images/*",
+        "README.md"
+      ]
+    },
+    {
+      "action": "log",
+      "msg": "\n\n🏁 Finished creating your project, {cyan {{ projectName }}}!\n\nRun {green npm start} to begin developing.\n"
+    }
+  ]
 }
