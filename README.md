@@ -73,6 +73,17 @@ npm start
 
 Now go to `localhost:3000` in your browser. You should see a boilerplate page ready for your customizations.
 
+### Starting with bluprint
+
+An alternative route is to create a new page with [bluprint](https://github.com/reuters-graphics/bluprint), the command-line scaffolding tool developed by the Reuters graphics department.
+
+```bash
+bluprint add https://github.com/datadesk/baker-example-page-template
+mkdir my-new-page
+cd my-new-page
+bluprint start baker-example-page
+```
+
 ## Exploring the repository
 
 Here are the standard files and folders that you’ll find when you clone a new project from our page template. You’ll spend more time working with some files than others, but it’s good to have a general sense of what they all do.
