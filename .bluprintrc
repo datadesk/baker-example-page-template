@@ -4,21 +4,6 @@
   "category": "baker",
   "actions":  [
     {
-      "action": "prompt",
-      "questions": [{
-        "type": "text",
-        "name": "projectName",
-        "message": "What should we call this project?"
-      }]
-    },
-    {
-      "action": "remove",
-      "paths": [
-        ".github/images/*",
-        "README.md"
-      ]
-    },
-    {
       "action": "execute",
       "cmds": [
         ["npm", ["install"]]
@@ -26,7 +11,7 @@
     },
     {
       "action": "log",
-      "msg": "\n\n🏁 Finished creating your project, {cyan {{ projectName }}}!\n\nRun {green npm start} to begin developing.\n"
+      "msg": "\n\n🏁 Finished creating your project.\n\nRun {green npm start} to open a test page.\n"
     }
   ]
 }
