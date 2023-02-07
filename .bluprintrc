@@ -6,6 +6,9 @@
     {
       "action": "execute",
       "cmds": [
+        ["git", ["init"]],
+        ["git", ["add", "."]],
+        ["git", ["commit", "-m", "initial"]],
         ["npm", ["install"]]
       ]
     },
