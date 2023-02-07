@@ -18,6 +18,16 @@
         "README.md"
       ]
     },
+,   {
+      "action": "execute",
+      "cmds": [
+        ["echo", ["{{ projectName }}", ">", "README.md"]],
+        ["git", ["init"]],
+        ["git", ["add", "."]],
+        ["git", ["commit", "-m", "initial"]],
+        ["npm", ["install"]]
+      ]
+    },
     {
       "action": "log",
       "msg": "\n\n🏁 Finished creating your project, {cyan {{ projectName }}}!\n\nRun {green npm start} to begin developing.\n"
