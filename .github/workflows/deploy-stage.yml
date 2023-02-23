@@ -59,19 +59,19 @@ jobs:
         env:
           BAKER_PATH_PREFIX: ${{ steps.delivery-path-prefix.outputs.result }}
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.BAKER_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.BAKER_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.BAKER_AWS_S3_STAGING_REGION }}
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.BAKER_AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.BAKER_AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{ secrets.BAKER_AWS_S3_STAGING_REGION }}
 
-      - name: Upload the prepared files
-        uses: datadesk/delivery-deploy-action@v1
-        with:
-          bucket: ${{ secrets.BAKER_AWS_S3_STAGING_BUCKET }}
-          base-path: ${{ steps.delivery-path-prefix.outputs.result }}
-          dir: _dist
-          should-cache: true
-          use-accelerate-endpoint: false
-          public: true
+#       - name: Upload the prepared files
+#         uses: datadesk/delivery-deploy-action@v1
+#         with:
+#           bucket: ${{ secrets.BAKER_AWS_S3_STAGING_BUCKET }}
+#           base-path: ${{ steps.delivery-path-prefix.outputs.result }}
+#           dir: _dist
+#           should-cache: true
+#           use-accelerate-endpoint: false
+#           public: true
