@@ -12,6 +12,7 @@ The Los Angeles Times uses baker to create the static pages published at latimes
 - 🗞️ JavaScript bundling with [Rollup](https://www.rollupjs.org/guide/en/) and [Babel](https://babeljs.io/) 
 - 🔢 Data imports with [quaff](https://github.com/rdmurphy/quaff)
 - 🥞 Dynamic page generation based on structured inputs
+- 📦 Optional post-deploy webhook for web component use
 - 🏭 Automatic deployment of each branch to a staging environment on each `push` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml)
 - 🌎 Push button deployment to the production environment on each `release` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-prod.yml)
 - 🔔 Slack messages that relay each deployment's status via [datadesk/notify-slack-on-build](https://github.com/datadesk/notify-slack-on-build) Github Action
@@ -32,6 +33,7 @@ With a little configuration, you can use this template to easily publish a page.
 - [Exploring the repository](#exploring-the-repository)
 - [Accessing assets](#accessing-assets)
 - [Accessing data](#accessing-data)
+- [Alternative way to access static asset URLs](#alternative-way-to-access-static-asset-urls)
 - [Dynamic pages](#dynamic-pages)
 - [Deployment](#deployment)
 - [Global variables](#global-variables)
@@ -87,6 +89,12 @@ bluprint start baker-example-page
 ## Exploring the repository
 
 Here are the standard files and folders that you’ll find when you clone a new project from our page template. You’ll spend more time working with some files than others, but it’s good to have a general sense of what they all do.
+
+### _embeds (optional)
+
+The embeds folder is where `.html` files you expect to use as embeds (whether iframes or web components) will be stored. Baker will look for this optional folder and process the `.html` files within to publish for iframe use and be compiled to be used as web components.
+
+For web components, you will need to set up your webhook in `baker.config.js` (more documentation on that futher below in the `baker.config.js` section).
 
 ### _data
 
@@ -201,6 +209,42 @@ const data = JSON.parse(dataElement.textContent);
 ```
 
 While the URL method is recommended, this method may still be preferred when you are trying to avoid extra network requests. It also has the added benefit of not requiring a special library to convert `.csv` data into JSON.
+
+## Alternative way to access static asset URLs
+
+In instances where the use of static tags in sources (example: `{% static 'assets/images/baker.jpg' %}`) does not work, the `prepareCrosswalk` alternative will allow you to access the static URL for an asset from the window.
+
+This method requires a file in `_data` called `crosswalk` (can be a `.csv` or `.tsv`). The following headers are required:
+- `AssetName`: Allows you to name the file with a recognizable name
+- `AssetType`: Must be either `aud` for audio files (`.mp3`), `img` for images (`.png` or `.jpg`) or `vid` (`.mp4`)
+The following headers are optional, depending on which file types you have:
+- `jpg`, `png`, `mp3`, `mp4`
+
+To process this data file through the `prepareCrosswalk` function within Baker, you will need to have the following at the bottom of your `.html` file:
+
+```javascript
+{% block extra_scripts %}
+<script>
+window.CROSSWALK = {{ crosswalk | prepareCrosswalk | dump }};
+</script>
+{% endblock extra_scripts %}
+```
+
+The result object (viewable in the console of the broswer window) will resemble the following structure:
+```javascript
+additionalData: []
+assets:
+  aud:
+    myCustomAudAssetName: {mp3: 'staticPathToMp3Asset.123Hash.mp3'}
+  img:
+    myCustomImgAssetName:
+      avif: "pathToAVIF.avif"
+      jpg: "pathToJPG.jpg"
+      webp: "pathToWEBP.webp"
+  vid:
+    myCustomVidAssetName: "pathToMP4.mp4"
+```
+
 
 ## Dynamic pages
 
@@ -547,3 +591,25 @@ default: `”/”`
 default: `””`
 
 The `staticRoot` option instructs Baker to put all assets in an additional directory. This is useful for projects that need to have unique slugs across every single page without nesting, allowing them to all share static assets. However — this is a special case and requires a custom setup for deployments. Do not attempt to use this without a good reason.
+
+#### webhookUrl
+
+default: `undefined`
+
+The `webhookUrl` option will not be included in `baker.config.js` by default, but users can add their own optional webhook URL here to use embeds as web components.
+
+The output will look something like this:
+
+```javascript
+{
+  data: {
+    id: "1234abc-567def-8910gh-111213-ij1415kl", # generated UID so each webhook request is unique
+    objType: "baker-project", # static value
+    attributes: {
+      projectSlug: "baker-example-page-template", # updates to name of project/repo
+      embeds: [ "my_embed_1", "my_embed_2", "my_embed_3" ], # name of `.html` file(s) in `_embeds` directory
+      domain: "https://your_domain_here.com/", # value set in `baker.config.js`
+    },
+  },
+}
+```

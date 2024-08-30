@@ -46,3 +46,9 @@
   </div>
 </article>
 {% endblock content %}
+
+{% block extra_scripts %}
+<script>
+window.CROSSWALK = {{ crosswalk | prepareCrosswalk | dump }};
+</script>
+{% endblock extra_scripts %}
