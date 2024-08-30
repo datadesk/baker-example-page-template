@@ -32,7 +32,7 @@ With a little configuration, you can use this template to easily publish a page.
 - [Exploring the repository](#exploring-the-repository)
 - [Accessing assets](#accessing-assets)
 - [Accessing data](#accessing-data)
-- [Alternative way to access static asset URLs](#alternative-way-to-access-static-asset-URLs)
+- [Alternative way to access static asset URLs](#alternative-way-to-access-static-asset-urls)
 - [Dynamic pages](#dynamic-pages)
 - [Deployment](#deployment)
 - [Global variables](#global-variables)
@@ -215,7 +215,7 @@ The following headers are optional, depending on which file types you have:
 
 To process this data file through the `prepareCrosswalk` function within Baker, you will need to have the following at the bottom of your `.html` file:
 
-```
+```javascript
 {% block extra_scripts %}
 <script>
 window.CROSSWALK = {{ crosswalk | prepareCrosswalk | dump }};
@@ -224,7 +224,7 @@ window.CROSSWALK = {{ crosswalk | prepareCrosswalk | dump }};
 ```
 
 The result object (viewable in the console of the broswer window) will resemble the following structure:
-```
+```javascript
 additionalData: []
 assets:
   aud:
