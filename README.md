@@ -12,6 +12,7 @@ The Los Angeles Times uses baker to create the static pages published at latimes
 - 🗞️ JavaScript bundling with [Rollup](https://www.rollupjs.org/guide/en/) and [Babel](https://babeljs.io/) 
 - 🔢 Data imports with [quaff](https://github.com/rdmurphy/quaff)
 - 🥞 Dynamic page generation based on structured inputs
+- 📦 Optional post-deploy webhook for web component use
 - 🏭 Automatic deployment of each branch to a staging environment on each `push` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-stage.yml)
 - 🌎 Push button deployment to the production environment on each `release` event via [GitHub Action](https://github.com/datadesk/baker-example-page-template/actions/workflows/deploy-prod.yml)
 - 🔔 Slack messages that relay each deployment's status via [datadesk/notify-slack-on-build](https://github.com/datadesk/notify-slack-on-build) Github Action
@@ -88,6 +89,14 @@ bluprint start baker-example-page
 ## Exploring the repository
 
 Here are the standard files and folders that you’ll find when you clone a new project from our page template. You’ll spend more time working with some files than others, but it’s good to have a general sense of what they all do.
+
+### _embeds (optional)
+
+The embeds folder is where `.html` files you expect to use as embeds (whether iframes or web components) will be stored. Baker will look for this optional folder and process the `.html` files within to publish for iframe use and be compiled to be used as web components.
+
+For web components, you will need to set up your webhook in (WHERE). The result of the webhook may look similar to:
+
+(EXAMPLE)
 
 ### _data
 
