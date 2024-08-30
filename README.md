@@ -32,6 +32,7 @@ With a little configuration, you can use this template to easily publish a page.
 - [Exploring the repository](#exploring-the-repository)
 - [Accessing assets](#accessing-assets)
 - [Accessing data](#accessing-data)
+- [Alternative way to access static asset URLs](#alternative-way-to-access-static-asset-URLs)
 - [Dynamic pages](#dynamic-pages)
 - [Deployment](#deployment)
 - [Global variables](#global-variables)
@@ -201,6 +202,42 @@ const data = JSON.parse(dataElement.textContent);
 ```
 
 While the URL method is recommended, this method may still be preferred when you are trying to avoid extra network requests. It also has the added benefit of not requiring a special library to convert `.csv` data into JSON.
+
+## Alternative way to access static asset URLs
+
+In instances where the use of static tags in sources (example: `{% static 'assets/images/baker.jpg' %}`) does not work, the `prepareCrosswalk` alternative will allow you to access the static URL for an asset from the window.
+
+This method requires a file in `_data` called `crosswalk` (can be a `.csv` or `.tsv`). The following headers are required:
+- `AssetName`: Allows you to name the file with a recognizable name
+- `AssetType`: Must be either `aud` for audio files (`.mp3`), `img` for images (`.png` or `.jpg`) or `vid` (`.mp4`)
+The following headers are optional, depending on which file types you have:
+- `jpg`, `png`, `mp3`, `mp4`
+
+To process this data file through the `prepareCrosswalk` function within Baker, you will need to have the following at the bottom of your `.html` file:
+
+```
+{% block extra_scripts %}
+<script>
+window.CROSSWALK = {{ crosswalk | prepareCrosswalk | dump }};
+</script>
+{% endblock extra_scripts %}
+```
+
+The result object (viewable in the console of the broswer window) will resemble the following structure:
+```
+additionalData: []
+assets:
+  aud:
+    myCustomAudAssetName: {mp3: 'staticPathToMp3Asset.123Hash.mp3'}
+  img:
+    myCustomImgAssetName:
+      avif: "pathToAVIF.avif"
+      jpg: "pathToJPG.jpg"
+      webp: "pathToWEBP.webp"
+  vid:
+    myCustomVidAssetName: "pathToMP4.mp4"
+```
+
 
 ## Dynamic pages
 
