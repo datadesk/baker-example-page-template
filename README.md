@@ -94,9 +94,7 @@ Here are the standard files and folders that you’ll find when you clone a new 
 
 The embeds folder is where `.html` files you expect to use as embeds (whether iframes or web components) will be stored. Baker will look for this optional folder and process the `.html` files within to publish for iframe use and be compiled to be used as web components.
 
-For web components, you will need to set up your webhook in (WHERE). The result of the webhook may look similar to:
-
-(EXAMPLE)
+For web components, you will need to set up your webhook in `baker.config.js` (more documentation on that futher below in the `baker.config.js` section).
 
 ### _data
 
@@ -593,3 +591,25 @@ default: `”/”`
 default: `””`
 
 The `staticRoot` option instructs Baker to put all assets in an additional directory. This is useful for projects that need to have unique slugs across every single page without nesting, allowing them to all share static assets. However — this is a special case and requires a custom setup for deployments. Do not attempt to use this without a good reason.
+
+#### webhookUrl
+
+default: `undefined`
+
+The `webhookUrl` option will not be included in `baker.config.js` by default, but users can add their own optional webhook URL here to use embeds as web components.
+
+The output will look something like this:
+
+```javascript
+{
+  data: {
+    id: "1234abc-567def-8910gh-111213-ij1415kl", # generated UID so each webhook request is unique
+    objType: "baker-project", # static value
+    attributes: {
+      projectSlug: "baker-example-page-template", # updates to name of project/repo
+      embeds: [ "my_embed_1", "my_embed_2", "my_embed_3" ], # name of `.html` file(s) in `_embeds` directory
+      domain: "https://your_domain_here.com/", # value set in `baker.config.js`
+    },
+  },
+}
+```
